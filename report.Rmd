@@ -1,0 +1,104 @@
+---
+header-includes:
+ - \usepackage{calc}
+ - \newlength\cvMargin
+ - \setlength\cvMargin{1cm}
+ - \newlength\cvSideWidth
+ - \setlength\cvSideWidth{0.3\paperwidth-2\cvMargin}
+ - \newlength\cvMainWidth
+ - \setlength\cvMainWidth{\paperwidth-4\cvMargin-\cvSideWidth}
+ - \usepackage{tikz}
+ - \usetikzlibrary{calc,positioning,backgrounds,matrix}
+geometry: margin=1cm,noheadfoot,a4paper
+output:
+  pdf_document: 
+    keep_tex: yes
+---
+
+\definecolor{cvGreen}{HTML}{357F2D}
+\definecolor{cvGreenLight}{HTML}{B8E4B3}
+\definecolor{cvDark}{HTML}{2F3142}
+
+\newcommand{\sidebar}{
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[cvGreenLight] (current page.north east) 
+      rectangle ++(-\cvSideWidth-2\cvMargin,-\paperheight);
+  \end{tikzpicture}
+}
+
+<!-- Libraries & Settings -->
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(reticulate)
+use_python('/usr/local/bin/python')
+
+library(googlesheets4)
+```
+
+<!-- To make matplotlib work -->
+<!-- $ cat ~/.matplotlib/matplotlibrc -->
+<!-- backend: TkAgg -->
+
+<!-- COMPILE TO LATEX -->
+<!-- Rscript -e "rmarkdown::render('./report.Rmd',output_file = './report.tex')" -->
+
+<!-- QUICK FIX KNITR BUG -->
+<!-- sed -i .tex.backup -e ':a' -e 'N' -e '$!ba' -e 's/\nMYSIDEBARBEGIN/MYSIDEBARBEGIN/g' -e 's|MYSIDEBARBEGIN|\\begin{minipage}{\\cvSideWidth}|g; s|MYSIDEBAREND|\\end{minipage}|g' report.tex -->
+
+<!-- Data Access -->
+```{r include=FALSE}
+data <- sheets_read('1oZ-kSLYnu0Jhe4ihznUHbScbNU0-vy2qx-i5E-uPxq0', range = 'by_gender')
+```
+
+\sidebar
+
+\begin{minipage}{\cvMainWidth}
+\maketitle
+\section{Title 1}
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\subsection{Title 2}
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\end{minipage}
+\hspace{2\cvMargin}MYSIDEBARBEGIN
+<!-- \begin{minipage}{\cvSideWidth} -->
+     
+```{python}
+import pandas as pd
+df = pd.DataFrame(r.data)
+df.set_index("(By gender)").T.plot()
+```
+```{python}
+import pandas as pd
+df = pd.DataFrame(r.data)
+df.set_index("(By gender)").T.plot()
+```
+```{python}
+import pandas as pd
+df = pd.DataFrame(r.data)
+df.set_index("(By gender)").T.plot()
+```
+MYSIDEBAREND
+<!-- \end{minipage} -->
+
+
+
+\newpage
+\sidebar
+
+aa;djknsc;akjsndc;asdmn;cakmsdc
+
+\newpage
+asdm;lcmk ;aslkdmc
